@@ -15,15 +15,26 @@ class ProductController extends Controller
                 'id' => 1,
                 'libelle' => 'Produit 1',
                 'marque' => 'Marque 1',
-                'prix' => 10.99,
-                'stock' => 50,
+                'prix' => 70.59,
+                'stock' => 30,
+                'image' => 'image 4.pnj',
             ],
             [
                 'id' => 2,
                 'libelle' => 'Produit 2',
                 'marque' => 'Marque 2',
-                'prix' => 19.99,
-                'stock' => 30,
+                'prix' => 69.25,
+                'stock' => 40,
+                'image' => 'image 2.pnj',
+            ],
+            [
+                'id' => 3,
+                'libelle' => 'Produit 3',
+                'marque' => 'Marque 3',
+                'prix' => 55.15,
+                'stock' => 10,
+                'image' => 'image 3.pnj',
+
             ],
         ];
     }
@@ -40,11 +51,12 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+         $request->validate([
             'libelle' => 'required|string',
             'marque' => 'required|string',
             'prix' => 'required|numeric',
             'stock' => 'required|integer|min:1|max:500',
+            'image' => 'image 3.pnj',
         ]);
 
         $newProduct = [
@@ -53,22 +65,21 @@ class ProductController extends Controller
             'marque' => $request->input('marque'),
             'prix' => $request->input('prix'),
             'stock' => $request->input('stock'),
+            'image' => $request->file('photo'),
         ];
-
-        array_push($this->products, $newProduct);
-
+        $this->products= $newProduct;
         return redirect()->route('products.index')->with('success', 'Produit créé avec succès');
     }
 
     public function show($id)
     {
-        $product = $this->findProductById($id);
+        $product = $this->SelectedProduct($id);
         return view('show', ['product' => $product]);
     }
 
     public function edit($id)
     {
-        $product = $this->findProductById($id);
+        $product = $this->SelectedProduct($id);
         return view('edit', ['product' => $product]);
     }
 
@@ -79,10 +90,13 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
+        $product = $this->SelectedProductByKey($id);
+       
+        return redirect()->route('products.index');
 
     }
 
-    private function findProductById($id)
+    private function SelectedProduct($id)
     {
         foreach ($this->products as $product) {
             if ($product['id'] == $id) {
@@ -91,14 +105,16 @@ class ProductController extends Controller
         }
         return null;
     }
-
-    private function findProductKeyById($id)
+    private function SelectedProductByKey($id)
     {
-        foreach ($this->products as $key => $product) {
-            if ($product['id'] == $id) {
-                return $key;
+        foreach ($this->products as $key => $this->product) {
+            if ($this->product['id'] == $id) {
+                unset($this->products[$key]);
+                break;
             }
         }
-        return -1;
+        return null;
     }
+
+   
 }

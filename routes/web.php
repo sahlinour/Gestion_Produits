@@ -6,6 +6,7 @@ use App\Http\Controllers\PhotoController;
 
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProduitController;
 
 
 Route::get('/', function () {
@@ -40,3 +41,14 @@ Route::get('/products/{id}', [ProductController::class, 'show'])->name('products
 Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
 Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
 Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+
+
+/*
+Route::get('/produits', [ProduitController::class, 'index'])->name('products.index');
+Route::get('/produits/create', [ProduitController::class, 'create'])->name('products.create');
+Route::post('/produits', [ProduitController::class, 'store'])->name('products.store');
+Route::get('/produits/{id}', [ProduitController::class, 'show'])->name('products.show');
+Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');*/
