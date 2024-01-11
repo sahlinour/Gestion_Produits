@@ -17,7 +17,7 @@ class ProductController extends Controller
                 'marque' => 'Marque 1',
                 'prix' => 70.59,
                 'stock' => 30,
-                'image' => 'image 4.pnj',
+                'image' => 'image 4.png',
             ],
             [
                 'id' => 2,
@@ -25,7 +25,7 @@ class ProductController extends Controller
                 'marque' => 'Marque 2',
                 'prix' => 69.25,
                 'stock' => 40,
-                'image' => 'image 2.pnj',
+                'image' => 'image 2.png',
             ],
             [
                 'id' => 3,
@@ -33,7 +33,7 @@ class ProductController extends Controller
                 'marque' => 'Marque 3',
                 'prix' => 55.15,
                 'stock' => 10,
-                'image' => 'image 3.pnj',
+                'image' => 'image 3.png',
 
             ],
         ];
@@ -56,7 +56,7 @@ class ProductController extends Controller
             'marque' => 'required|string',
             'prix' => 'required|numeric',
             'stock' => 'required|integer|min:1|max:500',
-            'image' => 'image 3.pnj',
+            'image' => 'file',
         ]);
 
         $newProduct = [
@@ -67,7 +67,7 @@ class ProductController extends Controller
             'stock' => $request->input('stock'),
             'image' => $request->file('photo'),
         ];
-        $this->products= $newProduct;
+        array_push($this->products,$newProduct);
         return redirect()->route('products.index')->with('success', 'Produit créé avec succès');
     }
 
